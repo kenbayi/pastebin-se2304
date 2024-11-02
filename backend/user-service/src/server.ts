@@ -1,13 +1,14 @@
 import express, {Request, Response} from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import profileRouter from "./routes/profile-management";
 
 const app = express();
 
 app.use(cors({ origin: `${process.env.FRONTEND_URL}`, credentials: true}));
 app.use(express.json());
 app.use(cookieParser());
-
+app.use("/profile", profileRouter);
 
 app.get("/", (req: Request, res: Response) => {
     console.log(req.cookies);
