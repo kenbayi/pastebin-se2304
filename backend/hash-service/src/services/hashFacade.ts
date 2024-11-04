@@ -34,7 +34,21 @@ class hashFacade {
     return `Hash with paste ID ${pasteId} deleted successfully.`;
   }
 
-  
+  async getHash(pasteId: number): Promise<string> {
+    const foundHash = await this.hashRepository.findOne({ where: { pasteId } });
+    if (!foundHash) {
+      throw new Error("Hash not found.");
+    }
+    return foundHash.hash;
+  }
+
+  async getPasteId(hash: string): Promise<number> {
+    const foundHash = await this.hashRepository.findOne({ where: { hash } });
+    if (!foundHash) {
+      throw new Error("Hash not found.");
+    }
+    return foundHash.pasteId;
+  }
 }
 
 export default new hashFacade();
