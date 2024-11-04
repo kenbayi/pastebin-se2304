@@ -24,6 +24,17 @@ class hashFacade {
 
     return newHash;
   }
+
+  async deleteHash(pasteId: number): Promise<string> {
+    const hashToDelete = await this.hashRepository.findOne({ where: { pasteId } });
+    if (!hashToDelete) {
+      throw new Error(`Hash with paste ID ${pasteId} not found.`);
+    }
+    await this.hashRepository.delete(hashToDelete.id);
+    return `Hash with paste ID ${pasteId} deleted successfully.`;
+  }
+
+  
 }
 
 export default new hashFacade();
