@@ -16,5 +16,17 @@ export class CreateHashCommand implements Command {
     }
   }
 }
+export class DeleteHashCommand implements Command {
+  async execute(req: Request, res: Response): Promise<void> {
+    const pasteId = Number(req.params.pasteId);
+    try {
+      const message = await hashFacade.deleteHash(pasteId);
+      res.status(200).json({ message });
+    } catch (error) {
+      res.status(404).json({ error: "Failed to delete hash" });
+    }
+  }
+}
+
 
 
