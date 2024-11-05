@@ -12,7 +12,7 @@ export class getPasteIdCommand {
             const response = await axios.get(`${process.env.HASH_SERVICE_URL}/hash/getPasteId/${this.hash}`);
             return response.data;
         } catch (error:any) {
-            throw new Error("Error getting pasteid: " + error.message);
+            throw new Error("Error getting pasteId: " + error.message);
         }
     }
 }

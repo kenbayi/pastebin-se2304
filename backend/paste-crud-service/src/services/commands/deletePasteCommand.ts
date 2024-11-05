@@ -20,6 +20,7 @@ export class DeletePasteCommand {
         // Store the deleted paste in Redis with a 320-second expiration
         await redisService.setDeletedPaste(this.pasteId, JSON.stringify(paste), 320);
     }
+    
     async undo(): Promise<Pastedata | void> {
         const deletedPasteData = await redisService.getDeletedPaste(this.pasteId);
         const pasteRepository = MetadataDataSource.getRepository(Pastedata);
@@ -35,4 +36,8 @@ export class DeletePasteCommand {
         }
     }
 
+    async complete(): Promise<Pastedata | void> {
+        const pasteRepository = MetadataDataSource.getRepository(Pastedata);
+        await pasteRepository.delete(this.pasteId);   
+    }
 }
