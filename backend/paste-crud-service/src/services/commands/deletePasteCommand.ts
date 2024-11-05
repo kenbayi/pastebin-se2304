@@ -20,5 +20,19 @@ export class DeletePasteCommand {
         // Store the deleted paste in Redis with a 320-second expiration
         await redisService.setDeletedPaste(this.pasteId, JSON.stringify(paste), 320);
     }
+    async undo(): Promise<Pastedata | void> {
+        const deletedPasteData = await redisService.getDeletedPaste(this.pasteId);
+        const pasteRepository = MetadataDataSource.getRepository(Pastedata);
+        if (deletedPasteData) {
+            const paste = JSON.parse(deletedPasteData);
+
+            // Restore the paste to the database
+            await pasteRepository.update(paste.id, {isDeleted: false});
+
+            // Remove from Redis as it's restored
+            await redisService.deleteDeletedPaste(this.pasteId);
+
+        }
+    }
 
 }

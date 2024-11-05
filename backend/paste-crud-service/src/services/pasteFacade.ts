@@ -93,4 +93,8 @@ export class PasteFacade {
 
         await new DeletePasteCommand(pasteId).execute(); 
     }
+
+    async undoDelete(pasteId: number) {
+        await new DeletePasteCommand(pasteId).undo();
+    }
 }
