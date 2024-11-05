@@ -6,6 +6,7 @@ import { getPasteIdCommand } from "./commands/forHashCommands/hashGetPasteIdComm
 import { GetPasteCommand } from "./commands/getPasteCommand";
 import { getUserCommand } from "./commands/requestUserCommand";
 import { getAllPastesCommand } from "./commands/getAllPasteCommand";
+import { GetPasteByUserCommand } from "./commands/getPasteByUserCommand";
 import { getHashCommand } from "./commands/forHashCommands/getHashCommand";
 import checkPasteExists from "./validation/pasteExists";
 import { DeletePasteCommand } from "./commands/deletePasteCommand";
@@ -69,6 +70,20 @@ export class PasteFacade {
         }));
     
         return pasteDetails; // Returns an array of all pastes with additional info
+    }
+
+    async getPasteByUser(id: number){
+        const pastes = await new GetPasteByUserCommand(id).execute(); 
+    
+        // Map through pastes to fetch additional data
+        const pasteDetails = await Promise.all(pastes.map(async (paste) => {
+            const fileContent = await this.cloudStorage?.download(paste.content);
+            const hash = await new getHashCommand(paste.id).execute(); 
+            
+            return { pasteData: paste, fileContent, hash }; 
+        }));
+        
+        return pasteDetails; 
     }
 
     async deletePaste(pasteId: number) {
