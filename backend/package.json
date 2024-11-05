@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start:all": "concurrently \"redis-server\" \"npm start --prefix user-service\" \"npm start --prefix paste-crud-service\" \"npm start --prefix hash-service\""
+    "start": "concurrently \"redis-server\" \"npm start --prefix user-service\" \"npm start --prefix paste-crud-service\" \"npm start --prefix hash-service\""
   },
   "keywords": [],
   "author": "",
