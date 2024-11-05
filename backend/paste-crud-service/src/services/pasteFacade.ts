@@ -5,6 +5,8 @@ import { SavePasteCommand } from "./commands/savePasteCommand";
 import { getPasteIdCommand } from "./commands/forHashCommands/hashGetPasteIdCommand";
 import { GetPasteCommand } from "./commands/getPasteCommand";
 import { getUserCommand } from "./commands/requestUserCommand";
+import { getAllPastesCommand } from "./commands/getAllPasteCommand";
+import { getHashCommand } from "./commands/forHashCommands/getHashCommand";
 
 export class PasteFacade {
     private cloudStorage?: CloudStorageAdapter;
@@ -49,5 +51,21 @@ export class PasteFacade {
         const user = await new getUserCommand(pasteData?.author).execute();
         
         return {pasteData, fileContent, user};
+    }
+
+    async getAllPastes() {
+        // Fetch all pastes
+        const pastes = await new getAllPastesCommand().execute(); // Use the command to fetch all pastes
+    
+        // Map through pastes to fetch additional data
+        const pasteDetails = await Promise.all(pastes.map(async (paste) => {
+            const fileContent = await this.cloudStorage?.download(paste.content); // Assuming content holds the file reference
+            const user = await new getUserCommand(paste.author).execute(); // Fetch user info by author
+            const hash = await new getHashCommand(paste.id).execute(); // Get the hash using the paste ID
+            
+            return { pasteData: paste, fileContent, user, hash }; // Return combined data including hash
+        }));
+    
+        return pasteDetails; // Returns an array of all pastes with additional info
     }
 }
