@@ -6,6 +6,11 @@ class EmailFacade {
         const emailContent = EmailFactory.createEmail('reset', resetLink);
         return await sendEmail(email, emailContent.subject, emailContent.html);
     }
+
+    static async sendNotificationEmail(email: string, message?: string) {
+        const emailContent = EmailFactory.createEmail('updPassword');
+        return await sendEmail(email, emailContent.subject, emailContent.html);
+    }
 }
 
 export default EmailFacade;

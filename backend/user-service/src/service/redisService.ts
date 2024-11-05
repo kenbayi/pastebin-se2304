@@ -16,6 +16,20 @@ class RedisService extends EventEmitter {
         await redisClient.del(`password-reset:${email}`);
         this.emit("tokenDeleted", { email });
     }
+
+    async findEmailByToken(token: string): Promise<string | null> {
+        const keys = await redisClient.keys('password-reset:*');
+        for (const key of keys) {
+            const storedToken = await redisClient.get(key);
+            if (storedToken === token) {
+                return key.split(':')[1];
+            }
+        }
+        return null;
+    }
+    async emitPasswordUpdated(email: string) {
+        this.emit("passwordUpdated", { email });
+    }
 }
 
 const redisService = new RedisService();
