@@ -7,6 +7,8 @@ import { GetPasteCommand } from "./commands/getPasteCommand";
 import { getUserCommand } from "./commands/requestUserCommand";
 import { getAllPastesCommand } from "./commands/getAllPasteCommand";
 import { getHashCommand } from "./commands/forHashCommands/getHashCommand";
+import checkPasteExists from "./validation/pasteExists";
+import { DeletePasteCommand } from "./commands/deletePasteCommand";
 
 export class PasteFacade {
     private cloudStorage?: CloudStorageAdapter;
@@ -67,5 +69,13 @@ export class PasteFacade {
         }));
     
         return pasteDetails; // Returns an array of all pastes with additional info
+    }
+
+    async deletePaste(pasteId: number) {
+        if (!await checkPasteExists(pasteId)) {
+            throw new Error("Paste not found.");
+        }
+
+        await new DeletePasteCommand(pasteId).execute(); 
     }
 }
