@@ -2,6 +2,9 @@ import { CloudStorageAdapter } from "./cloudServiceAdapter";
 import { PasteHashCommand } from "./commands/forHashCommands/hashGeneratorCommand";
 import { PastedataBuilder } from "./paste-data-builder";  
 import { SavePasteCommand } from "./commands/savePasteCommand";
+import { getPasteIdCommand } from "./commands/forHashCommands/hashGetPasteIdCommand";
+import { GetPasteCommand } from "./commands/getPasteCommand";
+import { getUserCommand } from "./commands/requestUserCommand";
 
 export class PasteFacade {
     private cloudStorage?: CloudStorageAdapter;
@@ -39,5 +42,12 @@ export class PasteFacade {
         }
     }
     
-
+    async getPaste(hash: string){
+        const { pasteId } = await new getPasteIdCommand(hash).execute();
+        const pasteData = await new GetPasteCommand(pasteId).execute();
+        const fileContent = await this.cloudStorage?.download(pasteData?.content)
+        const user = await new getUserCommand(pasteData?.author).execute();
+        
+        return {pasteData, fileContent, user};
+    }
 }
