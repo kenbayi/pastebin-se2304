@@ -1,0 +1,81 @@
+.page-container {
+    display: flex;
+    background-color: #ffffff;
+    width: 100vw;
+
+    height: 80vh;
+    padding: 60px;
+  }
+  
+  .paste-form {
+    flex: 2;
+    margin-right: 20px;
+    height: 80vh;
+    h2 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+  
+    textarea {
+      display: block;
+      width: 90%;
+      margin: 10px 0;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      resize: none; 
+      height: 450px; // Set a fixed height
+    }
+  
+    input,
+    select {
+      display: block;
+      width: 40%; // Set smaller width for input and select
+      margin: 10px 0;
+      padding: 8px;
+      font-size: 14px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+  
+    button {
+      width: 20%; // Set smaller width for button
+      padding: 10px;
+      background-color: $theme-primary;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+  
+      &:hover {
+        background-color: darken($theme-primary, 10%);
+      }
+    }
+  }
+  
+  .public-pastes {
+    flex: 1;
+    border-left: 1px solid #ddd;
+    padding-left: 20px;
+    height:80vh;
+    padding-right: 1.25rem;
+  
+    h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+  
+    .paste-item {
+      margin: 5px 0;
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+      cursor: pointer;
+  
+      &:hover {
+        background-color: #f9f9f9;
+      }
+    }
+  }
+  
