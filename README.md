@@ -2,20 +2,20 @@
 A pastebin platform where users can create, delete, and manage pastes with features for user authentication, profile management, and paste expiration. This project is built with a microservices architecture using TypeScript, Express, TypeORM, Redis, and Google Cloud Storage.
 
 ## The pastebin system is designed with a microservices architecture, comprising the following independent services:
-    - User Service: Manages user registration, login, and profile data.
-    - Paste Service: Handles paste creation, deletion, expiration, and retrieval.
-    - Hash Service: Generates and manages unique hash IDs for pastes stored in Redis for rapid retrieval.
+- User Service: Manages user registration, login, and profile data.
+- Paste Service: Handles paste creation, deletion, expiration, and retrieval.
+- Hash Service: Generates and manages unique hash IDs for pastes stored in Redis for rapid retrieval.
 
 Each service operates independently, with APIs hosted on different ports (e.g., localhost:3000 for user service, localhost:3001 for paste service, etc.). The architecture ensures scalability, flexibility, and ease of maintenance, with Redis and PostgreSQL as the primary data storage solutions for different types of data.
 
 ## Design Patterns
 The project incorporates several design patterns to improve modularity, maintainability, and functionality.
-    - Command Pattern: Used for handling paste deletion and undo functionality. Commands are stored in a command queue, allowing easy reversion (undo) of delete operations if needed.
-    - Observer Pattern: Integrated with Redis to observe real-time changes in paste data, such as deletion and expiration. This enables real-time updates on the frontend.
-    - Factory Pattern: Applied in creating instances of different paste types, allowing flexibility for extending the paste model if needed (e.g., private vs. public pastes).
-    - Builder Pattern: Facilitates constructing complex paste objects step-by-step, ensuring all required properties are set during creation.
-    - Facade Pattern: Provides a simplified interface to interact with the Redis service, handling paste data and expiration management.
-    - Adapter Pattern: Adapts Google Cloud Storage operations for consistent storage functionality, allowing the pastebin system to interact with cloud storage seamlessly.
+- Command Pattern: Used for handling paste deletion and undo functionality. Commands are stored in a command queue, allowing easy reversion (undo) of delete operations if needed.
+- Observer Pattern: Integrated with Redis to observe real-time changes in paste data, such as deletion and expiration. This enables real-time updates on the frontend.
+- Factory Pattern: Applied in creating instances of different paste types, allowing flexibility for extending the paste model if needed (e.g., private vs. public pastes).
+- Builder Pattern: Facilitates constructing complex paste objects step-by-step, ensuring all required properties are set during creation.
+- Facade Pattern: Provides a simplified interface to interact with the Redis service, handling paste data and expiration management.
+- Adapter Pattern: Adapts Google Cloud Storage operations for consistent storage functionality, allowing the pastebin system to interact with cloud storage seamlessly.
 
 ## Usage Instructions
 Clone the Repository:
