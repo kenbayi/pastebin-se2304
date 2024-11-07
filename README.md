@@ -42,7 +42,7 @@ Use npm start in backend folder.
 
 Access the Frontend:
 
-Run npm start in the frontend directory to start the React application and visit http://localhost:3002 in your browser.
+Run npm start in the frontend directory to start the React application and visit http://localhost:8000 in your browser.
 
 ## Assumptions and Limitations
 # Assumptions:
