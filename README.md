@@ -2,7 +2,6 @@
 A pastebin platform where users can create, delete, and manage pastes with features for user authentication, profile management, and paste expiration. This project is built with a microservices architecture using TypeScript, Express, TypeORM, Redis, and Google Cloud Storage.
 
 ## The pastebin system is designed with a microservices architecture, comprising the following independent services:
-
     - User Service: Manages user registration, login, and profile data.
     - Paste Service: Handles paste creation, deletion, expiration, and retrieval.
     - Hash Service: Generates and manages unique hash IDs for pastes stored in Redis for rapid retrieval.
@@ -11,8 +10,7 @@ Each service operates independently, with APIs hosted on different ports (e.g., 
 
 ## Design Patterns
 The project incorporates several design patterns to improve modularity, maintainability, and functionality.
-
-    * Command Pattern: Used for handling paste deletion and undo functionality. Commands are stored in a command queue, allowing easy reversion (undo) of delete operations if needed.
+    - Command Pattern: Used for handling paste deletion and undo functionality. Commands are stored in a command queue, allowing easy reversion (undo) of delete operations if needed.
     - Observer Pattern: Integrated with Redis to observe real-time changes in paste data, such as deletion and expiration. This enables real-time updates on the frontend.
     - Factory Pattern: Applied in creating instances of different paste types, allowing flexibility for extending the paste model if needed (e.g., private vs. public pastes).
     - Builder Pattern: Facilitates constructing complex paste objects step-by-step, ensuring all required properties are set during creation.
@@ -47,12 +45,12 @@ Access the Frontend:
 Run npm start in the frontend directory to start the React application and visit http://localhost:3002 in your browser.
 
 ## Assumptions and Limitations
-Assumptions:
+# Assumptions:
 
 Only unexpired pastes are displayed by default on the public pastes page.
 Users can undo a paste deletion within 5 minutes. After that, the paste is permanently removed.
 
-## Limitations:
+#  Limitations:
 
 Syntax highlighting is not implemented on the PastesPage component.
 The system relies on Redis for managing temporary deletion states; if Redis goes down, this functionality may be affected.
